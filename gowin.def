@@ -6,13 +6,21 @@ From: debian:bookworm
     export PATH="/opt/litex/litex/litex/tools:/usr/local/share/gowin/IDE/bin:$PATH"
     export QT_QPA_PLATFORM=offscreen
     export PIP_BREAK_SYSTEM_PACKAGES=1
+    export XDG_RUNTIME_DIR=/usr/local/share/runtime-dir
 
+%files
+    Gowin_V1.9.11.01_Education_Linux.tar.gz    /root/Gowin_V1.9.11.01_Education_Linux.tar.gz
+
+	
 %post
+    mkdir -p /usr/local/share/runtime-dir
+    chmod 0700 /usr/local/share/runtime-dir -R
     apt-get update && apt-get install -y \
         python3-full python3-pip python3-setuptools python3-wheel \
         build-essential git wget curl vim \
         bash-completion \
         libglib2.0-0 libfontconfig1 libopencv-dev libasound2-dev libxkbcommon-x11-0 libusb-1.0-0 openfpgaloader minicom \
+	x11-apps \
         verilator \
         meson ninja-build \
         libevent-dev libjson-c-dev \
@@ -36,11 +44,9 @@ From: debian:bookworm
     python3 litex_setup.py --init --install --config=standard
 
     # Install Gowin tools
-    wget -P /tmp/ https://cdn.gowinsemi.com.cn/Gowin_V1.9.11.01_Education_Linux.tar.gz
     mkdir -p /usr/local/share/gowin
-    tar xf /tmp/Gowin*.tar.gz -C /usr/local/share/gowin
-    rm -f /usr/local/share/gowin/IDE/lib/libstdc++.so.6
-    rm /tmp/Gowin*
+    tar xf /root/Gowin_V1.9.11.01_Education_Linux.tar.gz -C /usr/local/share/gowin
+    rm /root/Gowin*
 
 
 %labels
