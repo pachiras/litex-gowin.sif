@@ -5,7 +5,8 @@ litex-gowin.sif: litex-gowin.def
 	apptainer build --force $@ $<
 
 clean:
-	rm *.sif *.tar
+	rm litex-gowin.sif
 
 shell: litex-gowin.sif
-	apptainer shell --bind ${HOME}/workspace/gowin:/opt/gowin $<
+	apptainer shell --bind /opt/gowin:/opt/gowin $<
+	#apptainer shell $<
